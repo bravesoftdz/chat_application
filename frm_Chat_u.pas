@@ -42,7 +42,7 @@ type
   end;
 
 const
-  ServerAddress = 'http://home.kosie.me/Development/Chat/chat.php';
+ServerAddress = 'http://home.kosie.me/Development/Chat/chat.php'; //Change this to the path of the 'chat.php' file on your server.
 
 
 var

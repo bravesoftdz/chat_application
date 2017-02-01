@@ -1,3 +1,4 @@
+//This is the server end of the application, place this on a php 5+ webserver and point to it in the main applications configuration
 <?php
 function generateRandomString($length) {
     $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';

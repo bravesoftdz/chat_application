@@ -1,0 +1,13 @@
+program frm_Chat_p;
+
+uses
+  Forms,
+  frm_Chat_u in 'frm_Chat_u.pas' {Form1};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.

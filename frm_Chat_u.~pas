@@ -1,0 +1,78 @@
+unit frm_Chat_u;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, IdHTTP, XMLDoc, XMLIntf, ActiveX, StdCtrls, ComCtrls;
+
+
+type
+  TForm1 = class(TForm)
+    redChatBox: TRichEdit;
+    edtMessage: TEdit;
+    btnSend: TButton;
+    btnClear: TButton;
+    edtName: TEdit;
+    btnName: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure btnSendClick(Sender: TObject);
+    procedure btnClearClick(Sender: TObject);
+    procedure btnNameClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+const
+  ServerAddress = 'http://home.kosie.me/Development/chat.php';
+
+
+var
+  Form1: TForm1;
+  CoResult, Refresh : Integer;
+  HTTP: TIdHTTP;
+  Doc: IXMLDocument;
+  Node: IXMLNode;
+  sName, sMessage, sBuffer, sQuery, sActions, sUserName : String;
+
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  CoResult := CoInitializeEx(nil, COINIT_MULTITHREADED);
+  HTTP := TIdHTTP.Create(HTTP);
+  redChatBox.Text := 'Welcome to the chat! Type a message and press send to continue!';
+  repeat
+    sQuery := ServerAddress + '?new=false&clean=false&add=false';
+    sBuffer := HTTP.Get(sQuery);
+    redChatBox.Text := sBuffer;
+    Sleep(1000);
+  until True;
+end;
+
+procedure TForm1.btnSendClick(Sender: TObject);
+begin
+  sQuery := ServerAddress + '?new=false&clean=false&add=true&text=' + sUserName + ': ' + edtMessage.Text;
+  sBuffer := HTTP.Get(sQuery);
+  redChatBox.Text := sBuffer;
+end;
+
+procedure TForm1.btnClearClick(Sender: TObject);
+begin
+  sQuery := ServerAddress + '?new=false&clean=true&add=false';
+  sBuffer := HTTP.Get(sQuery);
+  redChatBox.Text := sBuffer;
+end;
+
+procedure TForm1.btnNameClick(Sender: TObject);
+begin
+  sUserName := edtName.Text;
+end;
+
+end.
+
